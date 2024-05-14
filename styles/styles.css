@@ -1,0 +1,20 @@
+@import './c.css';
+*   {
+box-sizing: border-box;
+padding: 0px;
+margin: 0px;
+}
+
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(to bottom right,purple,brown);
+min-height: 100vh;
+}
+
+.error{
+    background-color: red;
+    color: white;
+    font-weight: 600;
+} 
+
