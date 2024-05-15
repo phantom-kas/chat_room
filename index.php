@@ -43,9 +43,26 @@ if(isset($_GET['page'])){
     gap: 2rem
 }
 
+.navbar {
+    height: var(--navheight)
+}
+
 .logo {
     margin-right: auto;
 }
+
+.profile_image{
+    width:2.6rem;
+    height:2.6rem;
+    border-radius:50%
+}
+.imgcc{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:0.5rem
+}
+
 </style>
 
 <body>
@@ -63,7 +80,8 @@ if(isset($_GET['page'])){
             <a href="?page=create_room" class=''>
                 Create room
             </a>
-            <a href="?page=profile_info">
+            <a href="?page=profile_info" class=imgcc>
+                <img class='profile_image' src="<?php echo  $_SESSION['image_url']?>" alt="image">
                 Profile info
             </a>
         </div>

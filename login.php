@@ -10,6 +10,7 @@ else{
     session_start();
     $_SESSION['user_id'] =$res[0]['id'];
     $_SESSION['username'] =$res[0]['username'];
+    $_SESSION['image_url'] =IMG_DIR.'/'.$res[0]['profile_image_filename'];
     header('Location: ./index.php');
 }
 }
@@ -25,7 +26,7 @@ else{
 </head>
 <style>
 .app {
-    height: 100%;
+  
     background-color: rgb(0, 0, 0);
     width: 100%;
     margin-inline: auto;

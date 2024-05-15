@@ -2,6 +2,7 @@
 $error = '';
 if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['Conf_password'])){
 require_once './commons/mysql.php';
+require_once './commons/function.php';
 
 $res1 = $Db->query('SELECT * from users where username = ?' ,[$_POST['username']])->getRows();
 if(count($res1) > 0){
@@ -22,14 +23,23 @@ $res = $Db->query("INSERT INTO `users`
     $_POST['fname'],
     $_POST['lname'],
 ]
-    )->numAffectedRows();
-    if($res > 0){
-        header('Location: login.php');
+    )->lastId();
+    $t = time();
+    if($res){
+        if(upload('image','./src/profileimages/'.$t.'.jpg')){
+            
+            $Db->query("UPDATE `users` SET `profile_image_filename` = ? WHERE `users`.`id` = ?;",[$t.'.jpg',$res]);
+        }
+        else{
+            $error = 'Upload error';
+        }
+        
+    }
+    if($res  & !$error){
+    header('Location: login.php');
     }
 }
 }
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +51,7 @@ $res = $Db->query("INSERT INTO `users`
 </head>
 <style>
 .app{
-    height: 100%;
+    
     background-color: rgb(0, 0, 0);
     width: 100%;
     margin-inline: auto;
@@ -77,10 +87,71 @@ div.error{
     width:calc(100% - 2rem);
     padding: 0.5rem 2rem;
 }
+.profile-picture {
+  opacity: 0.75;
+  height: 250px;
+  width: 250px;
+  position: relative;
+  overflow: hidden;
+
+  /* default image */
+  background: url('https://qph.cf2.quoracdn.net/main-qimg-f32f85d21d59a5540948c3bfbce52e68');
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: 0 8px 6px -6px black;
+}
+.file-uploader {
+  /* make it invisible */
+  opacity: 0;
+  /* make it take the full height and width of the parent container */
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  /* make it absolute */
+  position: absolute;
+  top: 0%;
+  left: 0%;
+}
+.upload-icon {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* initial icon state */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  color: #ccc;
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: #bbb;
+}
+.profile-picture:hover .upload-icon {
+  opacity: 1;
+}
 </style>
+
 <body>
-    <form class='app'action='./register.php' method = 'post'>
+    <form class='app'action='./register.php' method = 'post' enctype="multipart/form-data">
     <h1>Register</h1>
+    <label for='upp' class="profile-picture">
+      <h1 class="upload-icon">
+        <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
+      </h1>
+      <input
+        class="file-uploader"
+        type="file"
+        id='upp'
+        onchange="upload()"
+        accept="image/*"
+        required
+        name='image'
+      />
+    </label>
+    <h2>
+        Profile Image
+    </h2>
+   
     <div>
         <input type="text"  required value= "<?php echo $_POST['fname'] ?? '';?>" name= 'fname' placeholder='First name'>
     </div>
@@ -120,5 +191,32 @@ div.error{
         </span>
 </div>
     </form>
+    <script>
+      
+    function upload() {
+
+const fileUploadInput = document.querySelector('.file-uploader');
+
+  // using index [0] to take the first file from the array
+  const image = fileUploadInput.files[0];
+
+  // check if the file selected is not an image file
+  if (!image.type.includes('image')) {
+    return alert('Only images are allowed!');
+  }
+
+  // check if size (in bytes) exceeds 10 MB
+  if (image.size > 10_000_000) {
+    return alert('Maximum upload size is 10MB!');
+  }
+  const fileReader = new FileReader();
+  fileReader.readAsDataURL(image);
+
+  fileReader.onload = (fileReaderEvent) => {
+    const profilePicture = document.querySelector('.profile-picture');
+    profilePicture.style.backgroundImage = `url(${fileReaderEvent.target.result})`;
+  }
+}
+</script>
 </body>
 </html>

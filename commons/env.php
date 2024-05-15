@@ -10,5 +10,8 @@ define('DB_PASS','');
 
 define('DEV',true);
 define('DB_HOST','localhost');
-define('ROOT','/chat_room')
+define('ROOT','/chat_room');
+
+
+define('IMG_DIR','./src/profileimages');
 ?>
