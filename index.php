@@ -10,14 +10,11 @@ if(!isset($_GET['page'])){
 else{
     $page = './pages/'.$_GET['page'].'.php';
 }
-
-
 if(isset($_GET['page'])){
     if(!file_exists($page)){
         $page = './other_pages/not_found.php';
     }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
