@@ -11,9 +11,10 @@ margin: 0px;
 
 body{
     font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(to bottom right,purple,brown);
+    background: linear-gradient(to bottom right,orange,orange);
 height: 100dvh;
 }
+
 #main{
     height: calc(100% - var(--navheight));
 }
@@ -33,3 +34,4 @@ height: 100dvh;
     display: flex;
     flex-direction: column;
 }
+

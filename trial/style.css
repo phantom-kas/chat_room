@@ -9,7 +9,7 @@
 
 
 
-.container {
+/* .container{ */
     /* display:flex; */
     /* gap: 3em; */
     /* flex-wrap: wrap; */
@@ -17,7 +17,7 @@
     /* height: 60vh; */
     /* padding: 23%; */
     /* align-content: flex-start; */
-}
+/* } */
 
 .box {
     display: flex;
@@ -27,7 +27,7 @@
     width: 150px;
     height: 150px;
     background-color:green;
-    color: black;
+    color: #000000, 0%);
     font-size: 1.5rem; 
 }
 

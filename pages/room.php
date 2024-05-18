@@ -56,11 +56,12 @@ $room = $Db->query('SELECT r.title  ,
     flex-direction: column;
     gap: 1rem;
 
+
 }
 
 .room>div {
-    display: flex;
-    flex-direction: column;
+    display: flex; 
+    flex-direction: column; 
 
 }
 
