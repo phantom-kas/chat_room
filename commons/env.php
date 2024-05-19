@@ -1,5 +1,5 @@
 <?php
-define('DB_NAME','chat_room2');
+define('DB_NAME','chat_room');
 define('DEV_DB_NAME','chat_room2');
 
 define('DB_USER','root');
@@ -16,3 +16,4 @@ define('ROOT','/chat_room');
 define('IMG_DIR','./src/profileimages');
 //Trendash1433$
 ?>
+
