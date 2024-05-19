@@ -42,3 +42,10 @@ width: 100%;
     margin-inline: auto;
     
 }
+
+
+@media screen and (max-width:799px) {
+    .page_padding{
+        padding-inline: 0.7rem;
+    }
+}

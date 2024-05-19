@@ -38,7 +38,7 @@ $room = $Db->query('SELECT r.title  ,
             <div> <?php  echo $room['discription']?> </div>
         </div>
 
-        <a href='./?page=room_chats'>
+        <a href="./?page=room_chats&room=<?php echo $_GET['id']?>">
             Enter room
         </a>
     </div>

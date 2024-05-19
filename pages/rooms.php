@@ -15,7 +15,7 @@ $rooms = $Db->query('SELECT r.title  , r.id as id , r.discription , r.created_at
       ?>
 
 
-    <a href="./?page=room&id= <?php echo $value['id'] ?>" class=" room">
+    <a href="./?page=room&id=<?php echo $value['id']?>" class=" room">
 
         <?php
         echo  $value['title'];

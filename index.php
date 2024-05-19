@@ -38,7 +38,7 @@ if(isset($_GET['page'])){
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    padding-block: 1rem;
+    padding-block: 0.3rem;
     background: green;
     gap: 2rem
 }

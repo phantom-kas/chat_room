@@ -1,27 +1,80 @@
+<?php
+require_once './commons/mysql.php';
+if (!isset($_GET['room'])) {
+    header('Location: ./index.php');
+}
+$roomData = $Db->query("SELECT title FROM rooms where id = ?",[$_GET['room']]  )->getRows();
+$messages = $Db->query('SELECT r.title,rm.from_user,
+ rm.messages,rm.created_at, rm.image_file_name ,
+  u.fname,u.lname,u.username,u.profile_image_filename FROM `room_messages`
+   as rm inner join users as u on rm.from_user = u.id
+    inner join rooms as r on rm.room_id = r.id where r.id = ? ORDER by rm.id asc;
+', [$_GET['room']])->getRows();
+
+// dd($messages );
+?>
 <div class='body page_padding  chats '>
     <div class='chat_room_title row_flex'>
         <h2>
-            Room Name
+            <?php
+            echo $roomData[0]['title']
+            ?>
         </h2>
     </div>
     <div class='  chats_body'>
-        <div class='ch column_flex'>
+        <div id=mmmmmm class='ch column_flex'>
 
 
-        <div class='chat column_flex other'>
+            <!-- <div class='chat column_flex other'>
             <div class='user_avater row_flex'>
-                <img src="" alt="">
+                <img src="./src/profileimages/1715747316.jpg" alt="">
                 <span>Name Name</span>
             </div>
             <div>
 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem temporibus, voluptates nisi delectus dolorem minima animi illum sequi nemo hic consectetur voluptatem, totam placeat, eligendi explicabo itaque rerum minus magnam.
             </div>
-        </div>
+        </div> -->
 
 
 
-
+            <!-- 
         <div class='chat column_flex mine'>
+            <div class='user_avater row_flex'>
+            <img src="./src/profileimages/1715747316.jpg" alt="">
+                <span>Name Name</span>
+            </div>
+            <div class='msg'>
+Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem temporibus, voluptates nisi delectus dolorem minima animi illum sequi nemo hic consectetur voluptatem, totam placeat, eligendi explicabo itaque rerum minus magnam.
+            </div>
+        </div> -->
+
+
+            <!-- <div class='chat column_flex mine'>
+            <div class='user_avater row_flex'>
+            <img src="./src/profileimages/1715747316.jpg" alt="">
+
+                <span>Name Name</span>
+            </div>
+            <div class='msg'>
+Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem temporibus, voluptates nisi delectus dolorem minima animi illum sequi nemo hic consectetur voluptatem, totam placeat, eligendi explicabo itaque rerum minus magnam.
+            </div>
+        </div> -->
+
+
+
+            <!-- <div class='chat column_flex mine'>
+            <div class='user_avater row_flex'>
+            <img src="./src/profileimages/1715747316.jpg" alt="">
+                <span>Name Name</span>
+            </div>
+            <div class='msg'>
+Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem temporibus, voluptates nisi delectus dolorem minima animi illum sequi nemo hic consectetur voluptatem, totam placeat, eligendi explicabo itaque rerum minus magnam.
+            </div>
+        </div> -->
+
+
+
+            <!-- <div class='chat column_flex mine'>
             <div class='user_avater row_flex'>
                 <img src="" alt="">
                 <span>Name Name</span>
@@ -29,169 +82,219 @@ Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem temporibus, vol
             <div class='msg'>
 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem temporibus, voluptates nisi delectus dolorem minima animi illum sequi nemo hic consectetur voluptatem, totam placeat, eligendi explicabo itaque rerum minus magnam.
             </div>
-        </div>
-
-
-        <div class='chat column_flex mine'>
-            <div class='user_avater row_flex'>
-                <img src="" alt="">
-                <span>Name Name</span>
-            </div>
-            <div class='msg'>
-Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem temporibus, voluptates nisi delectus dolorem minima animi illum sequi nemo hic consectetur voluptatem, totam placeat, eligendi explicabo itaque rerum minus magnam.
-            </div>
-        </div>
-
-
-
-        <div class='chat column_flex mine'>
-            <div class='user_avater row_flex'>
-                <img src="" alt="">
-                <span>Name Name</span>
-            </div>
-            <div class='msg'>
-Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem temporibus, voluptates nisi delectus dolorem minima animi illum sequi nemo hic consectetur voluptatem, totam placeat, eligendi explicabo itaque rerum minus magnam.
-            </div>
-        </div>
-
-
-
-        <div class='chat column_flex mine'>
-            <div class='user_avater row_flex'>
-                <img src="" alt="">
-                <span>Name Name</span>
-            </div>
-            <div class='msg'>
-Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem temporibus, voluptates nisi delectus dolorem minima animi illum sequi nemo hic consectetur voluptatem, totam placeat, eligendi explicabo itaque rerum minus magnam.
-            </div>
-        </div>
+        </div> -->
 
 
 
 
-        <div class='chat column_flex mine'>
-            <div class='user_avater row_flex'>
-                <img src="" alt="">
-                <span>Name Name</span>
-            </div>
-            <div class='msg'>
-Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem temporibus, voluptates nisi delectus dolorem minima animi illum sequi nemo hic consectetur voluptatem, totam placeat, eligendi explicabo itaque rerum minus magnam.
-            </div>
-        </div>
+            <!-- <div class='chat column_flex mine'>
+                <div class='user_avater row_flex'>
+                    <img src="" alt="">
+                    <span>Name Name</span>
+                </div>
+                <div class='msg'>
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem temporibus, voluptates nisi delectus dolorem minima animi illum sequi nemo hic consectetur voluptatem, totam placeat, eligendi explicabo itaque rerum minus magnam.
+                </div>
+            </div> -->
+
+
+
+            <?php
+
+            for ($i = 0; $i < count($messages); $i++) {
+                $class = $messages[$i]['from_user'] == $_SESSION['user_id'] ? 'mine' : '';
+            ?>
+
+                <div class='chat column_flex <?php echo $class ?>'>
+                    <div class='user_avater row_flex'>
+                        <img src="./src/profileimages/<?php echo $messages[$i]['profile_image_filename'] ?>" alt="">
+                        <span><?php echo $messages[$i]['username'] ?></span>
+                    </div>
+                    <div class='msg'>
+                        <?php echo $messages[$i]['messages'] ?>
+                    </div>
+                </div>
+
+            <?php
+            }
+            ?>
 
 
 
 
-        <div class='chat column_flex mine'>
-            <div class='user_avater row_flex'>
-                <img src="" alt="">
-                <span>Name Name</span>
-            </div>
-            <div class='msg'>
-Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem temporibus, voluptates nisi delectus dolorem minima animi illum sequi nemo hic consectetur voluptatem, totam placeat, eligendi explicabo itaque rerum minus magnam.
-            </div>
-        </div>
 
 
 
 
-        <div class='chat column_flex mine'>
-            <div class='user_avater row_flex'>
-                <img src="" alt="">
-                <span>Name Name</span>
-            </div>
-            <div class='msg'>
-Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem temporibus, voluptates nisi delectus dolorem minima animi illum sequi nemo hic consectetur voluptatem, totam placeat, eligendi explicabo itaque rerum minus magnam.
-            </div>
-        </div>
 
 
 
 
-        <div class='chat column_flex mine'>
-            <div class='user_avater row_flex'>
-                <img src="" alt="">
-                <span>Name Name</span>
-            </div>
-            <div class='msg'>
-Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem temporibus, voluptates nisi delectus dolorem minima animi illum sequi nemo hic consectetur voluptatem, totam placeat, eligendi explicabo itaque rerum minus magnam.
-            </div>
-        </div>
+
+
 
 
 
         </div>
-        <form class='chat_input row_flex'>
-            <textarea name="" id="" cols="30" rows="10"></textarea>
+        <form id='form' onsubmit="handleSubmit();return false" class='chat_input row_flex'>
+            <input type="hidden" name="uid" value=<?php
+                                                    echo "{$_SESSION['user_id']}";
+                                                    ?>>
+            <input type="hidden" name="room_id" value=<?php
+                                                        echo "{$_GET['room']}";
+                                                        ?>>
+
+            <textarea name="message" id="message_input" cols="30" rows="10"></textarea>
             <div class='column_flex'>
                 <button class='send_btn'>send</button>
             </div>
         </form>
     </div>
 </div>
-<style>
-    .ch{
-gap:1rem;
+<?php
+$id = $_SESSION['user_id'];
+$username ="'". $_SESSION['username']."'";
+$image ="'".$_SESSION['image_url']."'";
+?>
+<script type="text/javascript">
+    const scrollToBottom = (id) => {
+    const element = document.getElementById(id);
+    element.scrollTop = element.scrollHeight;
+}
 
-height: calc(100% - 5rem);
-    overflow: scroll;
-    padding-bottom: 1rem;
+    var userid = <?php echo $id; ?>;
+    var username = <?php echo $username; ?>;
+    var imageurl = <?php echo $image; ?>;
+
+    console.log(userid+username+imageurl);
+
+    const handleSubmit = async () => {
+
+        var formData = new FormData(document.querySelector('form'))
+
+
+        let response = await fetch("http://localhost/chat_room/api/?route=sendmessage", {
+            method: "POST",
+            body: formData,
+
+        });
+
+        let data = await response.json();
+        if (data.status == 'success') {
+            var div = document.createElement('div'); //container to append to
+            div.classList.add('chat', 'column_flex' ,'mine')
+            div.innerHTML = `
+                    <div class='user_avater row_flex'>
+                        <img src="${imageurl} " alt="">
+                        <span> ${username}</span>
+                    </div>
+                    <div class='msg'>
+                      ${formData.get('message')} 
+                    </div>
+             
+  `;
+            document.querySelector('.ch').append(div)
+            document.querySelector('#message_input').value = ''
+            scrollToBottom('mmmmmm')
+        }
+    }
+</script>
+<style>
+    .chat {
+        background: white;
+        padding: 2rem 1rem;
+        box-shadow: -1px 6px 4px 0px #00000078;
+        border-radius: 0.7rem;
+        margin-inline: 0.5rem;
+        width: min(500px, 100%);
+    }
+
+    .mine .user_avater {
+        flex-direction: row-reverse;
+    }
+
+    .user_avater {
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .user_avater img {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+    }
+
+    .ch {
+        gap: 1rem;
+        display: flex;
+        flex-direction: column;
+        height: calc(100% - 5rem);
+        overflow: scroll;
+        padding-bottom: 1rem;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        width: 100%;
+    }
+
+    .chats {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        height: 100%;
 
     }
-.chats {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    height: 100%;
 
-}
-.mine{
-    align-items:flex-end;
-}
-.mine>.msg{
-    text-align: right;
-}
-.chat_room_title {
-    width: 100%;
-    background:orange;
-    padding-bottom:0.5rem;
-}
+    .mine {
+        align-items: flex-end;
+        align-self: end;
 
-.chats_body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+    }
 
-.chats_body {
-    justify-content: space-between;
-    height: calc(100% - 3rem);
-    width: 100%;
-}
+    .mine>.msg {
+        text-align: right;
+    }
 
-.chat_input {
-    height: 4rem;
-    width: 100%;
-    gap: 1rem
-}
+    .chat_room_title {
+        width: 100%;
 
-.chat_input>* {
-    height: 100%
-}
+        padding-bottom: 0.5rem;
+    }
 
-.chat_input>textarea {
-    flex-grow: 1;
-}
+    .chats_body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-.chat_input>div {
-    justify-content: center;
-}
+    .chats_body {
+        justify-content: space-between;
+        height: calc(100% - 3rem);
+        width: 100%;
+    }
 
-.send_btn {
-    padding-inline: 1rem;
-    padding-block: 0.5rem;
-    background: blue;
-    height: 100%
-}
+    .chat_input {
+        height: 4rem;
+        width: 100%;
+        gap: 1rem
+    }
+
+    .chat_input>* {
+        height: 100%
+    }
+
+    .chat_input>textarea {
+        flex-grow: 1;
+    }
+
+    .chat_input>div {
+        justify-content: center;
+    }
+
+    .send_btn {
+        padding-inline: 1rem;
+        padding-block: 0.5rem;
+        background: blue;
+        height: 100%
+    }
 </style>
