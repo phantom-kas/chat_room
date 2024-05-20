@@ -3,15 +3,13 @@ require_once './commons/mysql.php';
 if (!isset($_GET['room'])) {
     header('Location: ./index.php');
 }
-$roomData = $Db->query("SELECT title FROM rooms where id = ?",[$_GET['room']]  )->getRows();
+$roomData = $Db->query("SELECT title FROM rooms where id = ?", [$_GET['room']])->getRows();
 $messages = $Db->query('SELECT r.title,rm.from_user,
  rm.messages,rm.created_at, rm.image_file_name ,
   u.fname,u.lname,u.username,u.profile_image_filename FROM `room_messages`
    as rm inner join users as u on rm.from_user = u.id
     inner join rooms as r on rm.room_id = r.id where r.id = ? ORDER by rm.id asc;
 ', [$_GET['room']])->getRows();
-
-// dd($messages );
 ?>
 <div class='body page_padding  chats '>
     <div class='chat_room_title row_flex'>
@@ -23,84 +21,7 @@ $messages = $Db->query('SELECT r.title,rm.from_user,
     </div>
     <div class='  chats_body'>
         <div id=mmmmmm class='ch column_flex'>
-
-
-            <!-- <div class='chat column_flex other'>
-            <div class='user_avater row_flex'>
-                <img src="./src/profileimages/1715747316.jpg" alt="">
-                <span>Name Name</span>
-            </div>
-            <div>
-Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem temporibus, voluptates nisi delectus dolorem minima animi illum sequi nemo hic consectetur voluptatem, totam placeat, eligendi explicabo itaque rerum minus magnam.
-            </div>
-        </div> -->
-
-
-
-            <!-- 
-        <div class='chat column_flex mine'>
-            <div class='user_avater row_flex'>
-            <img src="./src/profileimages/1715747316.jpg" alt="">
-                <span>Name Name</span>
-            </div>
-            <div class='msg'>
-Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem temporibus, voluptates nisi delectus dolorem minima animi illum sequi nemo hic consectetur voluptatem, totam placeat, eligendi explicabo itaque rerum minus magnam.
-            </div>
-        </div> -->
-
-
-            <!-- <div class='chat column_flex mine'>
-            <div class='user_avater row_flex'>
-            <img src="./src/profileimages/1715747316.jpg" alt="">
-
-                <span>Name Name</span>
-            </div>
-            <div class='msg'>
-Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem temporibus, voluptates nisi delectus dolorem minima animi illum sequi nemo hic consectetur voluptatem, totam placeat, eligendi explicabo itaque rerum minus magnam.
-            </div>
-        </div> -->
-
-
-
-            <!-- <div class='chat column_flex mine'>
-            <div class='user_avater row_flex'>
-            <img src="./src/profileimages/1715747316.jpg" alt="">
-                <span>Name Name</span>
-            </div>
-            <div class='msg'>
-Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem temporibus, voluptates nisi delectus dolorem minima animi illum sequi nemo hic consectetur voluptatem, totam placeat, eligendi explicabo itaque rerum minus magnam.
-            </div>
-        </div> -->
-
-
-
-            <!-- <div class='chat column_flex mine'>
-            <div class='user_avater row_flex'>
-                <img src="" alt="">
-                <span>Name Name</span>
-            </div>
-            <div class='msg'>
-Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem temporibus, voluptates nisi delectus dolorem minima animi illum sequi nemo hic consectetur voluptatem, totam placeat, eligendi explicabo itaque rerum minus magnam.
-            </div>
-        </div> -->
-
-
-
-
-            <!-- <div class='chat column_flex mine'>
-                <div class='user_avater row_flex'>
-                    <img src="" alt="">
-                    <span>Name Name</span>
-                </div>
-                <div class='msg'>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem temporibus, voluptates nisi delectus dolorem minima animi illum sequi nemo hic consectetur voluptatem, totam placeat, eligendi explicabo itaque rerum minus magnam.
-                </div>
-            </div> -->
-
-
-
             <?php
-
             for ($i = 0; $i < count($messages); $i++) {
                 $class = $messages[$i]['from_user'] == $_SESSION['user_id'] ? 'mine' : '';
             ?>
@@ -114,27 +35,9 @@ Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem temporibus, vol
                         <?php echo $messages[$i]['messages'] ?>
                     </div>
                 </div>
-
             <?php
             }
             ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         </div>
         <form id='form' onsubmit="handleSubmit();return false" class='chat_input row_flex'>
             <input type="hidden" name="uid" value=<?php
@@ -143,7 +46,6 @@ Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem temporibus, vol
             <input type="hidden" name="room_id" value=<?php
                                                         echo "{$_GET['room']}";
                                                         ?>>
-
             <textarea name="message" id="message_input" cols="30" rows="10"></textarea>
             <div class='column_flex'>
                 <button class='send_btn'>send</button>
@@ -153,49 +55,53 @@ Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem temporibus, vol
 </div>
 <?php
 $id = $_SESSION['user_id'];
-$username ="'". $_SESSION['username']."'";
-$image ="'".$_SESSION['image_url']."'";
+$username = "'" . $_SESSION['username'] . "'";
+$image = "'" . $_SESSION['image_url'] . "'";
 ?>
-<script type="text/javascript">
-    const scrollToBottom = (id) => {
-    const element = document.getElementById(id);
-    element.scrollTop = element.scrollHeight;
-}
 
+<script type="text/javascript">
     var userid = <?php echo $id; ?>;
     var username = <?php echo $username; ?>;
     var imageurl = <?php echo $image; ?>;
+    var room = <?php echo $_GET['room']; ?>;
+</script>
 
-    console.log(userid+username+imageurl);
+<script src="https://localhost:8181/socket.io/socket.io.js"></script>
+<script src='./src/js/connect_socket.js'>
+</script>
+<script src='./src/js/handle_sockets.js'>
+</script>
+<script src='./src/js/functions.js'></script>
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', () => {
+        scrollToBottom('mmmmmm')
+    })
 
+    console.log(userid + username + imageurl);
     const handleSubmit = async () => {
-
         var formData = new FormData(document.querySelector('form'))
-
-
         let response = await fetch("http://localhost/chat_room/api/?route=sendmessage", {
             method: "POST",
             body: formData,
-
         });
-
         let data = await response.json();
         if (data.status == 'success') {
-            var div = document.createElement('div'); //container to append to
-            div.classList.add('chat', 'column_flex' ,'mine')
-            div.innerHTML = `
-                    <div class='user_avater row_flex'>
-                        <img src="${imageurl} " alt="">
-                        <span> ${username}</span>
-                    </div>
-                    <div class='msg'>
-                      ${formData.get('message')} 
-                    </div>
-             
-  `;
-            document.querySelector('.ch').append(div)
+            // var div = document.createElement('div'); //container to append to
+            // div.classList.add('chat', 'column_flex', 'mine')
+            // div.innerHTML = `
+            //         <div class='user_avater row_flex'>
+            //             <img src="${imageurl} " alt="">
+            //             <span> ${username}</span>
+            //         </div>
+            //         <div class='msg'>
+            //           ${formData.get('message')} 
+            //         </div>`;
+            // document.querySelector('.ch').append(div)
+
+            addMessage( formData.get('message'),imageurl,username,true)
             document.querySelector('#message_input').value = ''
             scrollToBottom('mmmmmm')
+            socket.emit('send',{message:formData.get('message'),userid,room,imageurl,username})
         }
     }
 </script>
