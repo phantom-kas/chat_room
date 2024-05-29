@@ -1,0 +1,269 @@
+
+<!DOCTYPE html>
+	<head>
+		<title>
+		</title>
+	</head>
+		<body>
+			<canvas id = "Canvas" width = "1500" height = "1500"></canvas>
+			
+			<script>
+		
+				var canvas = document.getElementById("Canvas"); 
+				var ctx = canvas.getContext("2d");
+				
+				var Block = function(value,y,x)
+				{
+				this.value = value;
+				this.check;
+				this.ypost = y ;
+				this.xpost = x;
+				this.col ="silver";
+				this.textcol = "black";
+				}
+				Block.prototype.draw = function ()
+				{		
+				ctx.fillStyle = this.col;
+				ctx.fillRect(this.xpost,this.ypost,35,20)	
+				}
+				Block.prototype.write = function ()
+				{
+				ctx.font = "20px Courier";
+				ctx.fillStyle = this.textcol; 
+				ctx.textAlign = "middle"; 
+				 ctx.textBaseline = "top"; 
+				ctx.fillText(this.value,this.xpost,this.ypost);
+				}
+				Block.prototype.move = function(step)
+				{
+				this.value++
+				var i = 0;
+				
+				
+				if(this.xpost == 400)
+				{
+				this.xpost = 0;
+				this.ypost += 30;
+				}
+				else
+				{
+				this.xpost += step;
+				}
+				}
+				var Highlight = function(value,y,x)
+				{
+				this.value = value = -1;
+				this.ypost = y;
+				this.xpost = x;
+				this.col = "silver";
+				this.textcol = "black";
+				this.even = [];
+				this.odd = [];
+				this.prime = [];
+				}
+				var z = 0;
+				var v = 800;
+				var z1 = 0;
+				var v1 = 500;
+				var vp = 1100;
+				var zp = 0;
+				var e = 0;
+				var pcheck = function(b)
+				{ if((b%2 != 0 &&  b%3 != 0 && b%5 != 0 && b%7 !=0 &&  b%11 != 0 &&  b%13 != 0 &&  b%17 !=0 && b != 1) ||( b ==3  || b == 2  || b ==5 || b ==7 || b ==11 || b ==13 || b == 17 ) )
+				{return 1}
+				else
+				{return 0}
+				};
+				Highlight.prototype.draw = function ()
+				{
+				this.value++;
+				if(this.value > 200)
+				{e++;
+				this.value = 0;
+				this.xpost = 300;
+				this.ypost = 0;				
+				};
+				i = this.value;
+				this.check = this.value%2;
+				if(e == 0)
+				{
+				if(this.check == 0 && this.value != 0  )
+				{
+				z1+=30;
+				if(z1 == 690)
+				{
+				v1+=50;
+				z1= 30;
+				}				
+				this.col = "blue";
+				this.textcol = "white";
+				this.even[i] = new Block(i,z1,v1);
+				this.even[i].write();
+				this.even[i].move(50);
+				}
+				
+				else 
+				{this.col = "silver";this.textcol= "black" ;}
+				}
+				 else if (e == 1)
+				{
+				 if (this.value == 0 && pcheck(this.value) ==0)
+				{
+				this.col = "silver";this.textcol = "black" ;
+				}
+				else if ( this.check == 0 && this.value !=2)
+				{this.col = "blue";this.textcol = "white"}
+				else if( this.check != 0)
+				{
+				z+=30;
+				if(z == 690)
+				{
+				v+=50;
+				z= 30;
+				}
+				
+				this.textcol = "black";
+				if(pcheck(this.value) == 1){
+				zp+=30;
+				if(zp == 690)
+				{
+				vp+=50;
+				zp= 30;
+				}
+				this.col = "Red";
+				this.textcol = "white";
+				this.prime[i] = new Block(i,zp,vp);
+				this.prime[i].write();
+				this.prime[i].move(50);
+				}
+				else{this.col = "yellow";}
+				this.odd[i] = new Block(i,z,v);
+				this.odd[i].write();				
+				this.odd[i].move(50);
+				
+				}
+				else if(pcheck(this.value) == 1)
+				{
+				zp+=30;
+				if(zp == 690)
+				{
+				vp+=50;
+				zp= 30;
+				}
+				this.col = "Red";
+				this.textcol = "white";
+				this.prime[i] = new Block(i,zp,vp);
+				this.prime[i].write();
+				this.prime[i].move(50);
+				}
+				}
+				
+				ctx.fillStyle = this.col;
+				ctx.fillRect(this.xpost,this.ypost,35,20)
+				}
+				
+				Highlight.prototype.write = function ()
+				{
+				ctx.font = "20px Courier";
+				ctx.fillStyle = this.textcol; 
+				ctx.textAlign = "middle"; 
+				 ctx.textBaseline = "top"; 
+				ctx.fillText(this.value,this.xpost,this.ypost);
+				
+				
+				
+				}
+				Highlight.prototype.move = function(step)
+				{
+				
+				var i = 0;
+				
+				if(this.xpost < 400)
+				{
+				this.xpost += step;
+				}
+				else
+				{
+				this.xpost = 0;
+				this.ypost += 30;
+				}
+				}
+
+				
+				var Ehead = function()
+				{
+				ctx.font = "30px Courier";
+				ctx.fillStyle = this.textcol; 
+				ctx.textAlign = "middle"; 
+				 ctx.textBaseline = "middle"; 
+				ctx.fillText("Even numbers",500,10);
+				}
+				var Phead = function()
+				{
+				ctx.font = "30px Courier";
+				ctx.fillStyle = this.textcol; 
+				ctx.textAlign = "middle"; 
+				 ctx.textBaseline = "middle"; 
+				ctx.fillText("Prime numbers",1100,10);
+				}
+				var ohead = function()
+				{
+				ctx.font = "30px Courier";
+				ctx.fillStyle = this.textcol; 
+				ctx.textAlign = "middle"; 
+				 ctx.textBaseline = "middle"; 
+				ctx.fillText("Odd numbers",800,10);
+				}
+				Ehead();
+				ohead();
+				Phead();
+				
+				
+				
+				
+				
+				
+				
+						
+					var cells = new Block(0,0,300);
+
+					var stop = function(s,f)
+					{
+						if (s > 200){clearInterval(f);};
+					}
+					var c = 0;
+					var poput = function()
+					{
+					c++;
+					cells.draw();
+					cells.write();
+					cells.move(50);
+					stop(c,print);				
+					}
+					
+				var  print =  setInterval(poput,5)	
+				
+				var h = new Highlight(0,0,300);
+				var c2 = 0
+				var a = 0;
+				var poput2 = function()
+					{
+					for(i = 0;i < 1;i++){ 
+					c2++;
+					h.draw();
+					h.write();
+					h.move(50);
+					stop(c2,ht);
+					if(c2 == 200 && a<1)
+					{c2 = 0 ;a++};
+					}};
+				var  ht = setInterval(poput2,100)
+				print();
+				ht();
+						
+					
+			
+					
+			</script>
+		</body>
+</html>
