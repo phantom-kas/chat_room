@@ -32,7 +32,9 @@ if(isset($_GET['page'])){
     justify-content: center;
     align-items: flex-start;
     flex-direction: column;
-    width: 100%
+    width: 100%;
+    height: 100%;
+    padding-top:  var(--navheight);
 }
 
 .navbar>div {
@@ -40,12 +42,23 @@ if(isset($_GET['page'])){
     align-items: center;
     justify-content: flex-end;
     padding-block: 0.3rem;
-    background: green;
-    gap: 2rem
+  
+    gap: 2rem;
+    
+    
+   
 }
 
 .navbar {
-    height: var(--navheight)
+    background: gray;
+    height: var(--navheight);
+    position: fixed;
+    width:100vw;
+        top: 0px;
+        left: 0px;
+    -webkit-box-shadow: -1px 2px 5px 6px rgba(0,0,0,0.63);
+-moz-box-shadow: -1px 2px 5px 6px rgba(0,0,0,0.63);
+box-shadow: -1px 2px 5px 6px rgba(0,0,0,0.63);
 }
 
 .logo {
@@ -64,26 +77,68 @@ if(isset($_GET['page'])){
     gap:0.5rem
 }
 
+.navbar>div>a{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.1rem;
+    text-decoration: none;
+    color: white;
+}
+
+.navbar>div>a>i{
+    font-size: 2rem;
+    color: white;
+}
+
+@media screen and (max-width:800px) {
+    .navbar>div>a>span{
+        font-size: 0.7rem;
+        text-align: center;
+    } 
+    .navbar{
+        top:unset;
+        bottom: 0vh;
+        height: unset;
+        
+    }
+    #main{
+        padding-top: 1rem;
+        margin-top: unset;
+    }
+    #main{
+    height: calc(100% - var(--navheight));
+}
+
+}
+
 </style>
 
 <body>
     <header class='navbar'>
         <div class='page_padding'>
             <div class='logo'>
-                Logo
+                <img src="" alt="">
             </div>
             <a href="?page=rooms" class=''>
-                Rooms
+            <i class="fa-solid fa-comments"></i>
+                <span>Rooms</span>
             </a>
             <a href="?page=users" class=''>
-                Users
+            <i class="fa-solid fa-users"></i>
+                <span>Users</span>
             </a>
             <a href="?page=create_room" class=''>
-                Create room
+            <i class="fa-solid fa-plus"></i>
+               <span>
+               Create room
+               </span>
             </a>
             <a href="?page=profile_info" class=imgcc>
                 <img class='profile_image' src="<?php echo  $_SESSION['image_url']?>" alt="image">
+                <span>
                 Profile info
+                </span>
             </a>
         </div>
     </header>
