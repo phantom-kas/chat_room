@@ -1,6 +1,6 @@
 
 const fs = require('fs');
-const https = require('https')
+const https = require('http')
 const express = require('express');
 const app = express();
 const socketio = require('socket.io');
@@ -10,8 +10,8 @@ app.use(express.static(__dirname))
 //we generated them with mkcert
 // $ mkcert create-ca
 // $ mkcert create-cert
-const key = fs.readFileSync('./cert.key');
-const cert = fs.readFileSync('./cert.crt');
+const key = fs.readFileSync('cert.key');
+const cert = fs.readFileSync('cert.crt');
 
 //we changed our express setup so we can use https
 //pass the key and cert to createServer on https
