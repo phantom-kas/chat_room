@@ -115,7 +115,7 @@ $rooms = $Db->query('SELECT r.title ,r.isclosed  , r.id as id , r.discription , 
             `
         }
         if (data.status == 'error') {
-           window.alert(data.message)
+            window.alert(data.message)
         }
     }
 
@@ -138,25 +138,24 @@ $rooms = $Db->query('SELECT r.title ,r.isclosed  , r.id as id , r.discription , 
             window.alert(data.message)
         }
     }
-const closeOrOpenRoom = ()=>{
-   // alert(document.querySelector('#action').value)
-    if(document.querySelector('#action').value == 'open'){
-        openRoom()
-        //alert('open')
+    const closeOrOpenRoom = () => {
+        // alert(document.querySelector('#action').value)
+        if (document.querySelector('#action').value == 'open') {
+            openRoom()
+            //alert('open')
+        } else {
+            closeRoom()
+            // alert('close')
+        }
     }
-    else{
-        closeRoom()
-       // alert('close')
-    }
-}
-    const openRoomT = ()=>{
+    const openRoomT = () => {
         document.querySelector('#mmsg').innerHTML = 'Are You sure you want to Open this room.'
-        document.querySelector('#action').value='open'
+        document.querySelector('#action').value = 'open'
 
     }
-    const closeRoomT = ()=>{
+    const closeRoomT = () => {
         document.querySelector('#mmsg').innerHTML = 'Are You sure you want to Close this room.No new messages can be sent in this room.'
-        document.querySelector('#action').value='close'
+        document.querySelector('#action').value = 'close'
     }
 </script>
 <style>
@@ -238,14 +237,13 @@ const closeOrOpenRoom = ()=>{
         gap: 2rem;
         flex-wrap: wrap;
         border-radius: 10px;
-
         background-color: linear-gradient (to bottom right, #000000, #000000)
     }
 
     .container {
         display: flex;
         justify-content: flex-start;
-        align-items: flex-start;
+        align-items: center;
         height: 100%;
         width: 100%;
         overflow: scroll;
@@ -332,18 +330,21 @@ const closeOrOpenRoom = ()=>{
         background-color: red;
     } */
 
-    .close_room ,.open_room {
+    .close_room,
+    .open_room {
         background: #e74c3c;
         color: white;
         padding: 2rem;
     }
-.open_room{
-    background:#27ae60;
-}
 
-.open_room:hover{
-    background:green;
-}
+    .open_room {
+        background: #27ae60;
+    }
+
+    .open_room:hover {
+        background: green;
+    }
+
     .close_room:hover {
         background: #c0392b;
     }

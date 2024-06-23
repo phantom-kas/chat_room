@@ -7,7 +7,7 @@ $img_file_name = '';
 $user_id = $_GET['userid'] ?? $_SESSION['user_id'];
 
 //if ($_GET['userid'] != $_SESSION['user_id']) {
-  if(false){
+if (false) {
   if (!isAdmin()) {
     goBack();
   }
@@ -19,19 +19,19 @@ $user_id = $_GET['userid'] ?? $_SESSION['user_id'];
   // echo 'dddddd';
 }
 
-if(isset($_GET['userid'])){
-require_once './commons/mysql.php';
-$data = $Db->query("SELECT username , lname , fname , profile_image_filename  from users where  id = ? ",[$_GET['userid']])->getRows();
+if (isset($_GET['userid'])) {
+  require_once './commons/mysql.php';
+  $data = $Db->query("SELECT username , lname , fname , profile_image_filename  from users where  id = ? ", [$_GET['userid']])->getRows();
 
-$username = $data[0]['username'];
+  $username = $data[0]['username'];
 
-$username = $data[0]['username'];
-$firstname = $data[0]['fname'];
-$lastname = $data[0]['lname'];
-$img_file_name = IMG_DIR . '/' .$data[0]['profile_image_filename'];
+  $username = $data[0]['username'];
+  $firstname = $data[0]['fname'];
+  $lastname = $data[0]['lname'];
+  $img_file_name = IMG_DIR . '/' . $data[0]['profile_image_filename'];
 }
 ?>
-<div class='mxpw urwap max700 wrapper v-flex fs-fs col2 '>
+<div class=' urwap max700 wrapper v-flex fs-fs col2 '>
   <h1 class='mxpw v-flex  c-c mb2 mt2'>
     User Info
   </h1>
@@ -55,25 +55,39 @@ $img_file_name = IMG_DIR . '/' .$data[0]['profile_image_filename'];
 </div>
 
 <style>
-  .wrapper>h1{
+  .wrapper>h1 {
     text-align: center;
-    
+
   }
-  .wrapper{
+
+  .wrapper {
     display: flex;
     flex-direction: column;
-    width: min(700px , 100%);
-    margin-inline:auto;
+    width: min(400px, 90%);
+    margin-inline: auto;
     padding-inline: 1rem;
-    height: 100%;
-    overflow: scroll;
+    /* height: 100%; */
+    overflow: none;
+    color: white;
+    background-color: #1D3159;
+    border-radius: 40px;
+
+
+
+
+
+    color: white;
+    border-radius: 5rem;
+    padding-block: 2rem;
   }
-  .image_wrapper{
+
+  .image_wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
+
   img.profimg {
     width: min(30vw, 200px);
     height: min(30vw, 200px);
@@ -83,44 +97,56 @@ $img_file_name = IMG_DIR . '/' .$data[0]['profile_image_filename'];
     width: 50%;
   }
 
+
   .ppinfo>:first-child {
     text-align: right
   }
-  .gp05rem{
+
+  .gp05rem {
     gap: 0.5rem;
   }
-  .mt2{
+
+  .mt2 {
     margin-top: 2rem;
   }
-  .mb2{
+
+  .mb2 {
     margin-bottom: 2rem;
   }
 
-  h2{
+  h2 {
     display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
   }
-.mxpw{
-  width: 100%;
-}
-.h-flex{
-  display: flex;
-}
-.fs-c{
-  justify-content: flex-start;
-  align-items: center;
-}
-  @media screen and (max-width: 768px){
-    .ppinfo> *{
-    width: unset;
+
+  .mxpw {
+    width: 100%;
+    margin-inline: auto;
+
   }
-  .urwap{
-    white-space: break;
+
+  .h-flex {
+    display: flex;
   }
-  body{
-    /* background: red !important; */
+
+  .fs-c {
+    justify-content: flex-start;
+    align-items: center;
   }
+
+  @media screen and (max-width: 768px) {
+    .ppinfo>* {
+      width: unset;
+    }
+
+    .urwap {
+      white-space: break;
+    }
+
+    body {
+      /* background: red !important; */
+    }
   }
 </style>

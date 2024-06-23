@@ -34,7 +34,7 @@ $users = $Db->query("SELECT * FROM users")->getRows();
 
   #customers tr:hover {
     background-color: #ddd;
-    
+
   }
 
   #customers th {
@@ -47,41 +47,49 @@ $users = $Db->query("SELECT * FROM users")->getRows();
 </style>
 
 <div class="max700 page_padding body uuu">
- 
-
-<div class='uvcucc' >
 
 
-  <?php
-  foreach ($users as $key => $value) {
-  ?>
- 
+  <div class='uvcucc'>
 
 
-    <div class='user'>
-      <div class='imgc'>
-        <img src="<?php echo IMG_DIR.'/'.$value['profile_image_filename']?>" alt="">
+    <?php
+    foreach ($users as $key => $value) {
+    ?>
+
+
+
+      <div class='user'>
+        <div class='imgc'>
+          <img src="<?php echo IMG_DIR . '/' . $value['profile_image_filename'] ?>" alt="">
+        </div>
+        <div class='imc'>
+          <div>
+            <span>Username:</span>
+            <h2><?php echo $value['username'] ?></h2>
+          </div>
+          <div>
+            <span>First name:</span>
+            <h2><?php echo $value['fname'] ?></h2>
+          </div>
+          <div>
+            <span>Last name:</span>
+            <h2><?php echo $value['lname'] ?></h2>
+          </div>
+          <div>
+            <span>Created at:</span>
+            <h4><?php echo $value['created_at'] ?></h4>
+          </div>
+          <div>
+            <span>Role:</span>
+            <h4><?php echo $value['role'] ?></h4>
+          </div>
+        </div>
       </div>
-      <div class='imc'>
-        <div>
-          <span>Username:</span><h2><?php echo $value['username'] ?></h2>
-        </div>
-        <div>
-          <span>First name:</span><h2><?php echo $value['fname'] ?></h2>
-        </div>
-        <div>
-          <span>Last name:</span><h2><?php echo $value['lname'] ?></h2>
-        </div>
-        <div>
-          <span>Created at:</span><h4><?php echo $value['created_at'] ?></h4>
-        </div>
-      </div>
-    </div>
-  <?php
-  }
-  ?>
+    <?php
+    }
+    ?>
 
-</div>
+  </div>
 
 </div>
 
@@ -97,19 +105,22 @@ $users = $Db->query("SELECT * FROM users")->getRows();
     box-shadow: 3px 3px 1px 2px;
     transition: all 0.3s;
   }
+
   .user:hover {
     transform: translateY(-14px);
     box-shadow: 0px 9px 8px 9px;
   }
+
   .user:hover img {
     transform: scale(1.3);
   }
-  .uvcucc{
+
+  .uvcucc {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    gap:2rem;
+    gap: 2rem;
     width: 100%;
   }
 
@@ -129,12 +140,16 @@ $users = $Db->query("SELECT * FROM users")->getRows();
     flex-direction: column;
     gap: 1rem;
     padding: 2rem 2rem;
+    z-index: 100;
+    background: white;
   }
-  .imc > div {
+
+  .imc>div {
     display: flex;
     gap: 1rem;
   }
-  .uuu{
+
+  .uuu {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
