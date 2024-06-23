@@ -74,9 +74,9 @@ $messages = $Db->query('SELECT  r.title,rm.from_user,
     .msg {
         box-shadow: -1px 6px 4px 0px #00000078;
         background-color: white;
-        padding: 0.7rem 1rem;
+        padding: 0.1rem 1rem;
 
-        border-radius: 0.7rem;
+        border-radius: 0.2rem;
     }
 
     .mine>.msg {
@@ -86,10 +86,10 @@ $messages = $Db->query('SELECT  r.title,rm.from_user,
     .chat_room_title {
         width: 100%;
 
-        padding-block: 0.7rem;
-        padding-bottom: 0.5rem;
+        /* padding-block: 0.7rem; */
+        /* padding-bottom: 0.5rem; */
         width: 100%;
-        padding-bottom: 0.5rem;
+        /* padding-bottom: 0.5rem; */
         text-align: center;
 
     }
@@ -98,18 +98,20 @@ $messages = $Db->query('SELECT  r.title,rm.from_user,
         display: flex;
         flex-direction: column;
         align-items: center;
+        background: url(pages/chatbg2.jpg);
+        border-radius: 10px;
     }
 
     .chats_body {
         justify-content: space-between;
-        height: calc(100% - 3rem);
+        height: calc(100% - .1rem);
         width: 100%;
     }
 
     .chat_input {
         height: 4rem;
         width: 100%;
-        gap: 1rem
+        gap: 0.2rem
     }
 
     .chat_input>* {
@@ -160,11 +162,11 @@ $messages = $Db->query('SELECT  r.title,rm.from_user,
 </style>
 <div class='body page_padding  chats '>
     <div class='chat_room_title row_flex'>
-        <h2>
+        <!-- <h2>
             <?php
-            echo $roomData[0]['title']
+            //echo $roomData[0]['title']
             ?>
-        </h2>
+        </h2> -->
 
         <?php
         if ($roomData[0]['isclosed'] == 1) {
@@ -232,7 +234,7 @@ $image = "'" . $_SESSION['image_url'] . "'";
     var room = <?php echo $_GET['room']; ?>;
 </script>
 
-<script src="https://localhost:8181/socket.io/socket.io.js"></script>
+<script src="http://localhost:8181/socket.io/socket.io.js"></script>
 <script src='./src/js/connect_socket.js'>
 </script>
 <script src='./src/js/handle_sockets.js'>

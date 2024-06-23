@@ -1,5 +1,5 @@
 <?php
-define('DB_NAME','chat_room');
+define('DB_NAME','chat_room2');
 define('DEV_DB_NAME','chat_room2');
 
 define('DB_USER','root');
